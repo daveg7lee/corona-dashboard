@@ -6,4 +6,7 @@ totals_df = (
 )
 totals_df = totals_df.rename(columns={"index": "condition"})
 
-print(totals_df)
+countries_df = daily_df[["Country_Region", "Confirmed", "Deaths", "Recovered"]]
+countries_df = countries_df.groupby("Country_Region").sum().reset_index()
+
+print(totals_df, countries_df)
