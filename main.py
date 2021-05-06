@@ -19,7 +19,6 @@ bubble_map = px.scatter_geo(
     hover_name="Country_Region",
     locations="Country_Region",
     locationmode="country names",
-    projection="natural earth",
     color_continuous_scale=px.colors.sequential.Oryel,
     hover_data={
         "Confirmed": ":,2f",
@@ -40,7 +39,11 @@ bars = px.bar(
     template="plotly_dark",
     title="Total Global Cases",
     hover_data={"condition": False, "count": ":,"},
+    labels={"condition": "Condition", "count": "Count", "color": "Condition"},
 )
+
+bars.update_traces(marker_color=["#e74c3c", "#8e44ad", "#27ae60"])
+
 
 app.layout = html.Div(
     style={
@@ -55,12 +58,30 @@ app.layout = html.Div(
             children=[html.H1("Corona Dashboard", style={"fontSize": 40})],
         ),
         html.Div(
+            style={
+                "display": "grid",
+                "gap": 20,
+                "gridTemplateColumns": "repeat(4, 1fr)",
+            },
             children=[
-                html.Div(children=[dcc.Graph(id="bubble_map", figure=bubble_map)]),
+                html.Div(
+                    style={"grid-column": "span 3"},
+                    children=[dcc.Graph(id="bubble_map", figure=bubble_map)],
+                ),
                 html.Div(children=[make_table(countries_df)]),
-            ]
+            ],
         ),
-        html.Div(children=[html.Div(children=[dcc.Graph(id="Bar", figure=bars)])]),
+        html.Div(
+            style={
+                "display": "grid",
+                "gap": 30,
+                "gridTemplateColumns": "repeat(3, 1fr)",
+            },
+            children=[
+                html.Div(children=[dcc.Graph(id="Bar", figure=bars)]),
+                html.Div(style={"grid-column": "span 2"}, children=["Hello"]),
+            ],
+        ),
     ],
 )
 
