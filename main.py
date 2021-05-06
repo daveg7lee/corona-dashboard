@@ -125,6 +125,3 @@ def update(value):
     fig["data"][1]["line"]["color"] = "#8e44ad"
     fig["data"][2]["line"]["color"] = "#27ae60"
     return fig
-
-
-server.run()
