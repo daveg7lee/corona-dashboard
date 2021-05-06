@@ -82,7 +82,16 @@ app.layout = html.Div(
                 html.Div(children=[dcc.Graph(id="Bar", figure=bars)]),
                 html.Div(
                     style={"grid-column": "span 2"},
-                    children=[dcc.Dropdown(id="country", options=[],),],
+                    children=[
+                        dcc.Dropdown(
+                            id="country",
+                            options=[
+                                {"label": country, "value": country}
+                                for country in dropdown_options
+                            ],
+                        ),
+                        html.H1(id="country-output"),
+                    ],
                 ),
             ],
         ),
@@ -90,7 +99,7 @@ app.layout = html.Div(
 )
 
 
-@app.callback(Output("hello-output", "children"), [Input("country", "value")])
+@app.callback(Output("country-output", "children"), [Input("country", "value")])
 def update_hello(value):
     if value is None:
         return "Hello Anonymous"

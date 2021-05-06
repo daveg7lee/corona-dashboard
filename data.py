@@ -17,6 +17,9 @@ countries_df = (
     .reset_index()
 )
 
+dropdown_options = countries_df.sort_values("Country_Region").reset_index()
+dropdown_options = dropdown_options["Country_Region"]
+
 
 def make_df(condition, country=None):
     df = pd.read_csv(f"data/time_{condition}.csv")
@@ -41,5 +44,3 @@ def make_combined_df(country=None):
             combined_df = combined_df.merge(condition_df)
     return combined_df
 
-
-print(make_combined_df("Korea, South"))
