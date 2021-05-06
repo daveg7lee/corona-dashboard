@@ -3,7 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 from dash.dependencies import Input, Output
-from data import countries_df, totals_df
+from data import countries_df, totals_df, dropdown_options
 from builders import make_table
 
 stylesheets = [
@@ -82,10 +82,7 @@ app.layout = html.Div(
                 html.Div(children=[dcc.Graph(id="Bar", figure=bars)]),
                 html.Div(
                     style={"grid-column": "span 2"},
-                    children=[
-                        dcc.Input(placeholder="What is your name?", id="hello-input"),
-                        html.H2(children=["Hello"], id="hello-output"),
-                    ],
+                    children=[dcc.Dropdown(id="country", options=[],),],
                 ),
             ],
         ),
@@ -93,7 +90,7 @@ app.layout = html.Div(
 )
 
 
-@app.callback(Output("hello-output", "children"), [Input("hello-input", "value")])
+@app.callback(Output("hello-output", "children"), [Input("country", "value")])
 def update_hello(value):
     if value is None:
         return "Hello Anonymous"
