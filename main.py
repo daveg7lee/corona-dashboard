@@ -13,6 +13,8 @@ stylesheets = [
 
 app = dash.Dash(__name__, external_stylesheets=stylesheets)
 
+server = app.server
+
 bubble_map = px.scatter_geo(
     countries_df,
     size="Confirmed",
@@ -31,7 +33,7 @@ bubble_map = px.scatter_geo(
     title="Confirmed By Country",
     template="plotly_dark",
 )
-bubble_map.update_layout(margin=dict(l=0, r=0, t=40, b=0))
+bubble_map.update_layout(margin=dict(l=0, r=0, t=50, b=0))
 
 bars = px.bar(
     totals_df,
@@ -52,22 +54,23 @@ app.layout = html.Div(
         "backgroundColor": "#111111",
         "color": "white",
         "fontFamily": "Noto Sans, sans-serif",
+        "padding": "3rem",
     },
     children=[
         html.Header(
-            style={"textAlign": "center", "paddingTop": "50px", "marginBottom": 100},
+            style={"textAlign": "center", "paddingTop": "50px", "marginBottom": "4rem"},
             children=[html.H1("Corona Dashboard", style={"fontSize": 40})],
         ),
         html.Div(
             style={
                 "display": "grid",
                 "gap": 20,
-                "gridTemplateColumns": "repeat(4, 1fr)",
+                "gridTemplateColumns": "repeat(3, 1fr)",
                 "marginBottom": "2rem",
             },
             children=[
                 html.Div(
-                    style={"grid-column": "span 3"},
+                    style={"grid-column": "span 2"},
                     children=[dcc.Graph(id="bubble_map", figure=bubble_map)],
                 ),
                 html.Div(children=[make_table(countries_df)]),
@@ -85,6 +88,12 @@ app.layout = html.Div(
                     style={"grid-column": "span 2"},
                     children=[
                         dcc.Dropdown(
+                            style={
+                                "width": 600,
+                                "margin": "0 auto",
+                                "color": "#111111",
+                            },
+                            placeholder="Select a Country",
                             id="country",
                             options=[
                                 {"label": country, "value": country}
@@ -118,5 +127,4 @@ def update(value):
     return fig
 
 
-if __name__ == "__main__":
-    app.run_server(debug=True)
+server.run()
