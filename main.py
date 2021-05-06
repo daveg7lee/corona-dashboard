@@ -63,6 +63,7 @@ app.layout = html.Div(
                 "display": "grid",
                 "gap": 20,
                 "gridTemplateColumns": "repeat(4, 1fr)",
+                "marginBottom": "2rem",
             },
             children=[
                 html.Div(
@@ -101,7 +102,7 @@ app.layout = html.Div(
 
 @app.callback(Output("country_graph", "figure"), [Input("country", "value")])
 def update(value):
-    df = make_combined_df()
+    df = make_combined_df(value)
     fig = px.line(
         df,
         x="Date",
