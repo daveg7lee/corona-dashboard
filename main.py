@@ -11,6 +11,8 @@ stylesheets = [
     "https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap",
 ]
 
+app.title = "Corona Dashboard"
+
 app = dash.Dash(__name__, external_stylesheets=stylesheets)
 
 server = app.server
